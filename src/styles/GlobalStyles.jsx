@@ -37,7 +37,8 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     border: 0;
     font-size: 1.6rem;
-    color:#333;
+    background-color: #040714;
+    color: #f9f9f9;
     letter-spacing: -0.8px;
 
     a {
