@@ -1,19 +1,17 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import logo from './logo.svg';
-import './App.css';
 import GlobalStyles from './styles/GlobalStyles';
-import Nav from './components/Nav';
+import MainPage from './pages/main';
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <GlobalStyles />
-        <Nav />
-        {/* <Routes>
-          <Route path="/" element={<h1>Home</h1>} />
-        </Routes> */}
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+        </Routes>
       </div>
     </BrowserRouter>
   );
