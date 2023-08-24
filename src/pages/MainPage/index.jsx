@@ -1,12 +1,12 @@
-import requests from '../api/request';
-import Banner from '../components/Banner';
-import Category from '../components/Category';
-import Row from '../components/Row';
-import MainTemplates from '../components/Templates/MainTemplates';
+import requests from '../../api/request';
+import Banner from '../../components/Banner';
+import Category from '../../components/Category';
+import Row from '../../components/Row';
+import MainTemplates from '../../components/Templates/MainTemplates';
 
 function MainPage() {
   return (
-    <MainTemplates>
+    <>
       <Banner />
       <Category />
       <Row title="Trending Now" id="TN" fetchUrl={requests.fetchTrending} />
@@ -21,7 +21,7 @@ function MainPage() {
         id="CM"
         fetchUrl={requests.fetchComedyMovies}
       />
-    </MainTemplates>
+    </>
   );
 }
 

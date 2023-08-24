@@ -1,12 +1,13 @@
 import React from 'react';
 import * as S from './Templates.styles';
 import Nav from '../Nav';
+import { Outlet } from 'react-router-dom';
 
-function MainTemplates({ children }) {
+function MainTemplates() {
   return (
     <S.Container>
       <Nav />
-      <S.Contents>{children}</S.Contents>
+      <Outlet />
     </S.Container>
   );
 }
