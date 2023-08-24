@@ -1,12 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import instance from '../../api/axios';
 
+import MovieModal from '../Modal/MovieModal';
+
 import './Row.css';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 
 function Row({ title, id, fetchUrl }) {
   const [movies, setMovies] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState({});
 
+  // 영화 데이터 가져오기
   const fetchMovieData = useCallback(async () => {
     const response = await instance.get(fetchUrl);
     setMovies(response.data.results);
@@ -16,7 +21,10 @@ function Row({ title, id, fetchUrl }) {
     fetchMovieData();
   }, [fetchMovieData]);
 
-  console.log('id', document.getElementById(id));
+  const handleModalClick = (movie) => {
+    setIsModalOpen(true);
+    setSelectedMovie(movie);
+  };
 
   return (
     <div>
@@ -37,8 +45,11 @@ function Row({ title, id, fetchUrl }) {
             <img
               key={movie.id}
               className="row__poster"
-              src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+              src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
               alt={movie.name}
+              onClick={() => {
+                handleModalClick(movie);
+              }}
             />
           ))}
         </div>
@@ -53,6 +64,9 @@ function Row({ title, id, fetchUrl }) {
           </span>
         </div>
       </div>
+      {isModalOpen && (
+        <MovieModal {...selectedMovie} setIsModalOpen={setIsModalOpen} />
+      )}
     </div>
   );
 }
