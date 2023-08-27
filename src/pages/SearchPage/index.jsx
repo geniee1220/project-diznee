@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useDebounce } from '../../hooks/useDebounce';
+
 import instance from '../../api/axios';
 
 import './SearchPage.css';
@@ -15,12 +17,7 @@ function SearchPage() {
 
   const query = useQuery();
   const searchTerm = query.get('q');
-
-  useEffect(() => {
-    if (searchTerm) {
-      fetchSearchResult(searchTerm);
-    }
-  }, [searchTerm]);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const fetchSearchResult = async () => {
     try {
@@ -35,6 +32,13 @@ function SearchPage() {
     }
   };
 
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      fetchSearchResult(debouncedSearchTerm);
+    }
+  }, [debouncedSearchTerm]);
+
+  // 검색 결과 유무에 따라 다른 화면 출력
   if (searchResults.length > 0) {
     return (
       <section className="search-container">
