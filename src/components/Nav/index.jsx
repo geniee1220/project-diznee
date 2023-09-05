@@ -16,12 +16,15 @@ import * as S from './Nav.styles';
 function Nav() {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
+  const initialUser = localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user'))
+    : {};
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const [searchValue, setSearchValue] = useState('');
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(initialUser);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
