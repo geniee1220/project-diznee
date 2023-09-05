@@ -28,10 +28,10 @@ function Nav() {
       if (user) {
         if (pathname === '/') navigate('/main');
       } else {
-        navigate('/');
+        // navigate('/');
       }
     });
-  }, []);
+  }, [auth, navigate, pathname]);
 
   // 쿼리스트링을 검색창에 표시
   const handleSearch = (e) => {
@@ -43,6 +43,7 @@ function Nav() {
     signInWithPopup(auth, provider)
       .then((result) => {
         setUserData(result.user);
+        localStorage.setItem('user', JSON.stringify(result.user));
       })
       .catch((error) => {
         console.log(error);
@@ -53,6 +54,7 @@ function Nav() {
     signOut(auth)
       .then(() => {
         setUserData({});
+        localStorage.removeItem('user');
         navigate('/');
       })
       .catch((error) => {
