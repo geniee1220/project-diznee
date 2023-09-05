@@ -30,6 +30,45 @@ export const LoginButton = styled.a`
   }
 `;
 
+export const DropDown = styled.div`
+  position: absolute;
+  top: calc(100% + 3px);
+  right: 0px;
+  background: rgb(19, 19, 19);
+  border: 1px solid rgba(151, 151, 151, 0.34);
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 /50%) 0px 0px 18px 0px;
+  padding: 10px;
+  font-size: 14px;
+  letter-spacing: 3px;
+  width: fit-content;
+  white-space: nowrap;
+  opacity: 0;
+`;
+
+export const SignOutButton = styled.div`
+  position: relative;
+  height: 48px;
+  width: 48px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    ${DropDown} {
+      opacity: 1;
+      transition-duration: 1s;
+    }
+  }
+`;
+
+export const UserImg = styled.img`
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+`;
+
 export const Input = styled.input`
   position: fixed;
   left: 50%;

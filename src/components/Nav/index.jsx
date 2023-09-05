@@ -21,6 +21,7 @@ function Nav() {
   const navigate = useNavigate();
 
   const [searchValue, setSearchValue] = useState('');
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -41,7 +42,18 @@ function Nav() {
   const handleAuth = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        console.log(result);
+        setUserData(result.user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        setUserData({});
+        navigate('/');
       })
       .catch((error) => {
         console.log(error);
@@ -55,14 +67,22 @@ function Nav() {
       {pathname === '/' ? (
         <S.LoginButton onClick={handleAuth}>Login</S.LoginButton>
       ) : (
-        <S.Input
-          type="text"
-          className="nav__input"
-          spellCheck="false"
-          placeholder="검색"
-          value={searchValue}
-          onChange={handleSearch}
-        />
+        <>
+          <S.Input
+            type="text"
+            className="nav__input"
+            spellCheck="false"
+            placeholder="검색"
+            value={searchValue}
+            onChange={handleSearch}
+          />
+          <S.SignOutButton onClick={() => signOut(auth)}>
+            <S.UserImg src={userData.photoUrl} alt={userData.displayName} />
+            <S.DropDown>
+              <span onClick={handleLogout}>로그아웃</span>
+            </S.DropDown>
+          </S.SignOutButton>
+        </>
       )}
     </S.NavWrapper>
   );
