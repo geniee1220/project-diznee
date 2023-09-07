@@ -11,11 +11,17 @@ import {
   signOut,
 } from 'firebase/auth';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser, removeUser } from '../../store/userSlice';
+
 import * as S from './Nav.styles';
 
 function Nav() {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user);
+
   const initialUser = localStorage.getItem('user')
     ? JSON.parse(localStorage.getItem('user'))
     : {};
@@ -24,7 +30,6 @@ function Nav() {
   const navigate = useNavigate();
 
   const [searchValue, setSearchValue] = useState('');
-  const [userData, setUserData] = useState(initialUser);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -45,8 +50,14 @@ function Nav() {
   const handleAuth = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        setUserData(result.user);
-        localStorage.setItem('user', JSON.stringify(result.user));
+        dispatch(
+          setUser({
+            id: result.user.uid,
+            email: result.user.email,
+            name: result.user.displayName,
+            photo: result.user.photoURL,
+          })
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -56,7 +67,7 @@ function Nav() {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        setUserData({});
+        dispatch(removeUser());
         localStorage.removeItem('user');
         navigate('/');
       })

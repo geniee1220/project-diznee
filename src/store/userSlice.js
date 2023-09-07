@@ -15,7 +15,7 @@ const userSlice = createSlice({
       state.photoURL = action.payload.photoURL;
       state.displayName = action.payload.displayName;
     },
-    removeUSer: (state) => {
+    removeUser: (state) => {
       state.id = '';
       state.email = '';
       state.photoURL = '';
