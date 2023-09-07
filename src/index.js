@@ -6,14 +6,19 @@ import reportWebVitals from './reportWebVitals';
 import app from './firebase';
 
 import { Provider } from 'react-redux';
-import { store } from './store';
+import { persistor, store } from './store';
+
+import { PersistGate } from 'redux-persist/integration/react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    {/* PersistGate를 사용해 지속 데이터를 사용할 수 있을 때까지 지연 로딩 */}
+    <PersistGate loading={null} persistor={persistor}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </PersistGate>
   </Provider>
 );
 
