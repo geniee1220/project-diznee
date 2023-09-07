@@ -33,7 +33,7 @@ function Nav() {
       if (user) {
         if (pathname === '/') navigate('/main');
       } else {
-        // navigate('/');
+        navigate('/');
       }
     });
   }, [auth, navigate, pathname]);
