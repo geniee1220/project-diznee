@@ -21,10 +21,7 @@ function Nav() {
   const provider = new GoogleAuthProvider();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user);
-
-  const initialUser = localStorage.getItem('user')
-    ? JSON.parse(localStorage.getItem('user'))
-    : {};
+  console.log('userData', userData);
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -55,7 +52,7 @@ function Nav() {
             id: result.user.uid,
             email: result.user.email,
             name: result.user.displayName,
-            photo: result.user.photoURL,
+            photoURL: result.user.photoURL,
           })
         );
       })
@@ -93,7 +90,10 @@ function Nav() {
             onChange={handleSearch}
           />
           <S.SignOutButton onClick={() => signOut(auth)}>
-            <S.UserImg src={userData.photoUrl} alt={userData.displayName} />
+            <S.UserImg
+              src={userData.user.photoURL}
+              alt={userData.user.displayName}
+            />
             <S.DropDown>
               <span onClick={handleLogout}>로그아웃</span>
             </S.DropDown>
